@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Mapa de Descarte de Lixo Eletrônico</title>
+    <style>
+        #map { height: 100%; width: 100%; }
+        body, html { height: 100%; margin: 0; }
+    </style>
+</head>
+<body>
+    <h1>Mapa de Pontos de Descarte de Lixo Eletrônico</h1>
+    <div id="map"></div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: -23.4182, lng: -51.3965 }, // Coordenadas de Arapongas
+                zoom: 13
+            });
+
+            // Exemplo de ponto de descarte
+            const locations = [
+                {
+                    name: "Ponto de Coleta 1",
+                    lat: -23.4190,
+                    lng: -51.3950,
+                    description: "Descarte de televisores e computadores."
+                },
+                {
+                    name: "Ponto de Coleta 2",
+                    lat: -23.4210,
+                    lng: -51.3960,
+                    description: "Descarte de baterias e celulares."
+                }
+                // Adicione mais pontos conforme necessário
+            ];
+
+            // Adicionando marcadores no mapa
+            locations.forEach(function(location) {
+                const marker = new google.maps.Marker({
+                    position: { lat: location.lat, lng: location.lng },
+                    map: map,
+                    title: location.name
+                });
+
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<h3>${location.name}</h3><p>${location.description}</p>`
+                });
+
+                marker.addListener('click', function() {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
